@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ */
+
+#include "ravelin-audio-overlay.dtsi"
+
+&waipio_snd {
+	qcom,wcn-btfm = <0>;
+};
