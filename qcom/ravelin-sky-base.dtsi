@@ -6,3 +6,7 @@
 #include "ravelin-xiaomi-common-base.dtsi"
 #include "ravelin-xiaomi-legacy-memory.dtsi"
 
+&ufshc_mem {
+	/* Stock trustzone doesn't broadcast the HWKM TP key */
+	qcom,ice-hwkm-set-tpkey;
+};
