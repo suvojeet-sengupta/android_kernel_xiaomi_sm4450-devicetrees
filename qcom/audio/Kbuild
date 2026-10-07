@@ -35,6 +35,7 @@ endif # !CONFIG_XIAOMI_DEVICE_DTBS
 
 ifeq ($(CONFIG_XIAOMI_DEVICE_DTBS),y)
 dtbo-$(CONFIG_ARCH_RAVELIN) += ravelin-audio.dtbo
+dtbo-$(CONFIG_SKY_DTB) += ravelin-audio-xiaomi-sky.dtbo
 else
 dtbo-$(CONFIG_ARCH_RAVELIN) += ravelin-audio.dtbo \
                  ravelin-audio-idp.dtbo \
