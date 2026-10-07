@@ -19,7 +19,7 @@ dtbo-y += st/sun-nfc.dtbo \
           st/kera-nfc.dtbo
 endif
 
-ifeq ($(CONFIG_ARCH_PARROT),y)
+ifeq ($(CONFIG_ARCH_PARROT)$(CONFIG_XIAOMI_DEVICE_DTBS),y)
 dtbo-y += nxp/parrot-nfc.dtbo \
           nxp/parrot-nfc-qrd.dtbo \
           nxp/parrot-nfc-idp.dtbo \
@@ -30,7 +30,9 @@ endif
 
 ifeq ($(CONFIG_ARCH_RAVELIN),y)
 dtbo-y += nxp/ravelin-nfc.dtbo
+ifneq ($(CONFIG_XIAOMI_DEVICE_DTBS),y)
 dtbo-y += nxp/montague-hsp-idp-nfc.dtbo
+endif # !CONFIG_XIAOMI_DEVICE_DTBS
 endif
 
 

@@ -93,7 +93,7 @@ dtbo-y += ravelin-qca6490-cnss.dtbo
 dtbo-y += ravelin-qca6750-icnss.dtbo
 endif
 
-ifeq ($(CONFIG_ARCH_PARROT),y)
+ifeq ($(CONFIG_ARCH_PARROT)$(CONFIG_XIAOMI_DEVICE_DTBS),y)
 dtbo-y += parrot-idp-wcn3990.dtbo
 dtbo-y += parrot-idp-wcn6750.dtbo
 dtbo-y += parrot-qrd-wcn3990.dtbo

@@ -25,12 +25,14 @@ dtbo-$(CONFIG_ARCH_BLAIR) += display/blair-sde.dtbo \
 endif
 
 ifneq ($(CONFIG_ARCH_QTI_VM), y)
+ifneq ($(CONFIG_XIAOMI_DEVICE_DTBS),y)
 dtbo-$(CONFIG_ARCH_PARROT) += display/parrot-sde.dtbo \
 		display/parrot-sde-display-atp-overlay.dtbo \
 		display/parrot-sde-display-idp-overlay.dtbo \
 		display/parrot-sde-display-idp-amoled-overlay.dtbo \
 		display/parrot-sde-display-rumi-overlay.dtbo \
 		display/parrot-sde-display-qrd-overlay.dtbo
+endif # !CONFIG_XIAOMI_DEVICE_DTBS
 else
 dtbo-$(CONFIG_ARCH_PARROT) += display/trustedvm-parrot-sde-display-idp-overlay.dtbo \
 		display/trustedvm-parrot-sde-display-qrd-overlay.dtbo
@@ -49,12 +51,16 @@ dtbo-$(CONFIG_ARCH_HOLI) += display/holi-sde.dtbo \
 endif
 
 ifneq ($(CONFIG_ARCH_QTI_VM), y)
+ifeq ($(CONFIG_XIAOMI_DEVICE_DTBS),y)
+dtbo-$(CONFIG_ARCH_RAVELIN) += display/ravelin-sde.dtbo
+else
 dtbo-$(CONFIG_ARCH_RAVELIN) += display/ravelin-sde.dtbo \
                 display/ravelin-sde-display-atp-overlay.dtbo \
                 display/ravelin-sde-display-idp-overlay.dtbo \
                 display/ravelin-sde-display-idp-amoled-overlay.dtbo \
                 display/ravelin-sde-display-rumi-overlay.dtbo \
                 display/ravelin-sde-display-qrd-overlay.dtbo
+endif # CONFIG_XIAOMI_DEVICE_DTBS
 else
 dtbo-$(CONFIG_ARCH_RAVELIN) += display/trustedvm-ravelin-sde-display-idp-overlay.dtbo \
                 display/trustedvm-ravelin-sde-display-idp-amoled-overlay.dtbo

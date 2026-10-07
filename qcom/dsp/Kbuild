@@ -30,7 +30,7 @@ ifeq ($(CONFIG_ARCH_MONACO), y)
 dtbo-y += monaco/monaco-dsp.dtbo
 endif
 
-ifeq ($(CONFIG_ARCH_PARROT), y)
+ifeq ($(CONFIG_ARCH_PARROT)$(CONFIG_XIAOMI_DEVICE_DTBS),y)
 dtbo-y += parrot/parrot-dsp.dtbo
 endif
 
