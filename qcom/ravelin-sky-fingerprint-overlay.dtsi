@@ -1,0 +1,71 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+&soc {
+	goodix_fp {
+		compatible = "goodix,fingerprint";
+		interrupt-parent = <&tlmm>;
+		interrupts = <105 1>;
+		fp-gpio-irq = <&tlmm 105 0>;
+		fp-gpio-reset = <&tlmm 102 0>;
+		fp_vdd_vreg-supply = <&L4E>;
+		status = "okay";
+	};
+
+	fpc1020 {
+		compatible = "fpc,fpc1020";
+		interrupt-parent = <&tlmm>;
+		interrupts = <105 0>;
+		fpc,gpio_irq = <&tlmm 105 0>;
+		fpc,gpio_rst = <&tlmm 102 0>;
+		fp_vdd_vreg-supply = <&L4E>;
+		pinctrl-names = "fpc1020_reset_reset", "fpc1020_reset_active", "fpc1020_irq_active";
+		pinctrl-0 = <&fpc1020_reset_reset>;
+		pinctrl-1 = <&fpc1020_reset_active>;
+		pinctrl-2 = <&fpc1020_irq_active>;
+		status = "okay";
+	};
+};
+
+&tlmm {
+	fpc1020_reset_reset: msm_gpio_102 {
+		mux {
+			pins = "gpio102";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio102";
+			drive-strength = <2>;
+			bias-disable;
+			output-low;
+		};
+	};
+
+	fpc1020_reset_active: msm_gpio_102_output_high {
+		mux {
+			pins = "gpio102";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio102";
+			drive-strength = <2>;
+			bias-disable;
+			output-high;
+		};
+	};
+
+	fpc1020_irq_active: msm_gpio_105 {
+		mux {
+			pins = "gpio105";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio105";
+			drive-strength = <2>;
+			bias-pull-up;
+			input-enable;
+		};
+	};
+};

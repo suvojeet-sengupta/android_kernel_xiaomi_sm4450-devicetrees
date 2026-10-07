@@ -1,0 +1,8 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Xiaomi Sky base.
+ */
+
+#include "ravelin-xiaomi-common-base.dtsi"
+#include "ravelin-xiaomi-legacy-memory.dtsi"
+

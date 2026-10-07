@@ -1,0 +1,107 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Xiaomi Sky board.
+ */
+
+#include "ravelin-xiaomi-common-overlay-base.dtsi"
+#include "ravelin-xiaomi-common-overlay.dtsi"
+#include "ravelin-sky-charger-overlay.dtsi"
+#include "ravelin-sky-fingerprint-overlay.dtsi"
+
+&qupv3_se9_spi {
+	status = "ok";
+
+	spi_ir@1 {
+		compatible = "ir-spi-led";
+		reg = <1>;
+		spi-max-frequency = <50000000>;
+		spi-cpol;
+		status = "ok";
+	};
+};
+
+&pm7250b_gpios {
+	display_panel_supply_ctrl {
+		display_panel_vddio_default: display_panel_vddio_default {
+			pins = "gpio11";
+			function = "normal";
+			input-disable;
+			output-enable;
+			bias-disable;
+			power-source = <0>;
+			qcom,drive-strength = <2>;
+		};
+
+		display_panel_extvdd_default: display_panel_extvdd_default {
+			pins = "gpio12";
+			function = "normal";
+			input-disable;
+			output-enable;
+			bias-disable;
+			power-source = <0>;
+			qcom,drive-strength = <2>;
+		};
+	};
+
+	camera_flashlight_supply_ctrl {
+		cam_flash_off: cam_flash_off {
+			pins = "gpio3";
+			function = "normal";
+			input-disable;
+			output-enable;
+			output-low;
+			bias-disable;
+			power-source = <0>;
+			qcom,drive-strength = <2>;
+		};
+
+		cam_torch_off: cam_torch_off {
+			pins = "gpio5";
+			function = "normal";
+			input-disable;
+			output-enable;
+			output-low;
+			bias-disable;
+			power-source = <0>;
+			qcom,drive-strength = <2>;
+		};
+
+		cam_flash_on: cam_flash_on {
+			pins = "gpio3";
+			function = "normal";
+			input-disable;
+			output-enable;
+			output-high;
+			bias-disable;
+			power-source = <0>;
+			qcom,drive-strength = <2>;
+		};
+
+		cam_torch_on: cam_torch_on {
+			pins = "gpio5";
+			function = "normal";
+			input-disable;
+			output-enable;
+			output-high;
+			bias-disable;
+			power-source = <0>;
+			qcom,drive-strength = <2>;
+		};
+	};
+};
+
+&ufshc_mem {
+	qcom,ufs-dev-revert;
+};
+
+&usb2_phy0 {
+	qcom,param-override-seq = <0x66 0x6c 0x0a 0x70 0x1c 0x74>;
+};
+
+&pm8010l_l3 {
+	regulator-min-microvolt = <3000000>;
+	regulator-max-microvolt = <3000000>;
+	qcom,init-voltage = <3000000>;
+	regulator-boot-on;
+	regulator-always-on;
+};
