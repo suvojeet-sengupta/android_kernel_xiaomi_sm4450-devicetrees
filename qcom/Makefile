@@ -209,6 +209,7 @@ pineapple-dtb-$(CONFIG_ARCH_PINEAPPLE) += \
 pineapple-overlays-dtb-$(CONFIG_ARCH_PINEAPPLE) += $(PINEAPPLE_BOARDS) $(NOAPQ_PINEAPPLE_BOARDS) $(PINEAPPLE_BASE_DTB) $(PINEAPPLE_APQ_BASE_DTB)
 dtb-y += $(pineapple-dtb-y)
 
+ifneq ($(CONFIG_XIAOMI_DEVICE_DTBS),y)
 PARROT_BASE_DTB += parrot.dtb parrotp.dtb parrot-sg.dtb parrotp-sg.dtb parrot-lite.dtb
 PARROT_4GB_BASE_DTB += parrot-4gb.dtb
 
@@ -247,7 +248,11 @@ parrot-dtb-$(CONFIG_ARCH_PARROT) += \
 	$(call add-overlays, $(PARROT_4GB_BOARDS),$(PARROT_4GB_BASE_DTB))
 parrot-overlays-dtb-$(CONFIG_ARCH_PARROT) += $(PARROT_BOARDS) $(PARROT_BASE_DTB) $(PARROT_4GB_BOARDS) $(PARROT_4GB_BASE_DTB)
 dtb-y += $(parrot-dtb-y)
+endif # !CONFIG_XIAOMI_DEVICE_DTBS
 
+ifeq ($(CONFIG_XIAOMI_DEVICE_DTBS),y)
+
+else
 RAVELIN_BASE_DTB += ravelin.dtb ravelinp.dtb ravelin-sg.dtb ravelinp-sg.dtb montague.dtb montaguep.dtb montague-qmb.dtb montague-cqm-fp1.dtb montague-cqm-fp2.dtb montague-cqm-fp3.dtb montague-cqs-fp1.dtb montague-cqs-fp2.dtb montague-cqs-fp3.dtb
 RAVELIN_4GB_BASE_DTB += ravelin-4gb.dtb ravelinp-4gb.dtb ravelin-sg.dtb ravelinp-sg.dtb montague-4gb.dtb montaguep-4gb.dtb
 
@@ -271,9 +276,17 @@ RAVELIN_4GB_BOARDS += \
 		 ravelin-qrd-4gb-overlay.dtbo \
 		 montague-moselle-overlay.dtbo
 
+endif # CONFIG_XIAOMI_DEVICE_DTBS
+
+ifeq ($(CONFIG_XIAOMI_DEVICE_DTBS),y)
+# Only ship device bases and board overlays, no base+board combinations
+parrot-dtb-$(CONFIG_ARCH_RAVELIN) += $(RAVELIN_BASE_DTB) $(RAVELIN_4GB_BASE_DTB) \
+	$(RAVELIN_BOARDS) $(RAVELIN_4GB_BOARDS)
+else
 parrot-dtb-$(CONFIG_ARCH_RAVELIN) += \
 	$(call add-overlays, $(RAVELIN_BOARDS),$(RAVELIN_BASE_DTB)) \
 	$(call add-overlays, $(RAVELIN_4GB_BOARDS),$(RAVELIN_4GB_BASE_DTB))
+endif
 parrot-overlays-dtb-$(CONFIG_ARCH_RAVELIN) += $(RAVELIN_BOARDS) $(RAVELIN_BASE_DTB) $(RAVELIN_4GB_BOARDS) $(RAVELIN_4GB_BASE_DTB)
 dtb-y += $(parrot-dtb-y)
 
