@@ -1,0 +1,77 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Memory layout for Xiaomi Ravelin devices on older firmware
+ * (sky, breeze, flame), matching their stock 5.10 and flame 6.6 DTs.
+ */
+
+/delete-node/ &hyp_mem;
+/delete-node/ &hyp_mem1;
+/delete-node/ &pvm_fw_mem;
+/delete-node/ &dsm_mem;
+/delete-node/ &dsm_cma_mem;
+/delete-node/ &ipa_fw_mem;
+/delete-node/ &ipa_gsi_mem;
+/delete-node/ &gpu_microcode_mem;
+
+&reserved_memory {
+	hyp_mem: hyp_region@80000000 {
+		no-map;
+		reg = <0x0 0x80000000 0x0 0x600000>;
+	};
+
+	ipa_fw_mem: ipa_fw_region@89c00000 {
+		no-map;
+		reg = <0x0 0x89c00000 0x0 0x10000>;
+	};
+
+	ipa_gsi_mem: ipa_gsi_region@89c10000 {
+		no-map;
+		reg = <0x0 0x89c10000 0x0 0xa000>;
+	};
+
+	gpu_microcode_mem: gpu_microcode_region@89c1a000 {
+		no-map;
+		reg = <0x0 0x89c1a000 0x0 0x2000>;
+	};
+};
+
+&adsp_mem {
+	reg = <0x0 0x87300000 0x0 0x2900000>;
+};
+
+&mpss_mem {
+	reg = <0x0 0x8a000000 0x0 0xd700000>;
+};
+
+&modem_pas {
+	memory-region = <&mpss_mem &system_cma>;
+};
+
+&soc {
+	qcom,memshare {
+		/delete-node/ qcom,client_md_op1;
+	};
+};
+
+/* Trusted UI VM layout differs on this firmware, keep it off for now */
+&trust_ui_vm_mem {
+	status = "disabled";
+};
+
+&trust_ui_vm_qrtr {
+	status = "disabled";
+};
+
+&trust_ui_vm_vblk0_ring {
+	status = "disabled";
+};
+
+&trust_ui_vm_swiotlb {
+	status = "disabled";
+};
+
+&soc {
+	gh-secure-vm-loader@0 {
+		status = "disabled";
+	};
+};

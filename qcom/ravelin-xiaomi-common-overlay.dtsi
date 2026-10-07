@@ -1,0 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Common overlay for Xiaomi Ravelin devices, only things verified
+ * against the stock DTs of every device go here.
+ */

@@ -1,0 +1,11 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Common base for Xiaomi Ravelin devices.
+ */
+
+#include "ravelin.dtsi"
+
+/* GPIOs 18-21 are owned by TZ, reading them aborts (stock sky/breeze/flame/mist) */
+&tlmm {
+	qcom,gpios-reserved = <0 1 2 3 18 19 20 21>;
+};
