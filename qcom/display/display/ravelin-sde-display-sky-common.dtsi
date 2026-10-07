@@ -1,0 +1,51 @@
+#include "touchscreen_m19.dtsi"
+#include "ravelin-sde-display.dtsi"
+#include "dsi_panel_m19_36_02_0a_fhd_dsc_vid.dtsi"
+#include "dsi_panel_m19_42_03_0b_fhd_dsc_vid.dtsi"
+#include "dsi_panel_m19_42_03_0c_fhd_dsc_vid.dtsi"
+
+&soc {
+	thermal_screen: thermal-screen {
+		panel = <&dsi_m19_36_02_0a_fhd_dsc_vid
+			 &dsi_m19_42_03_0b_fhd_dsc_vid
+			 &dsi_m19_42_03_0c_fhd_dsc_vid>;
+	};
+};
+
+&mdss_mdp {
+	connectors = <&sde_dsi &smmu_sde_unsec &smmu_sde_sec &sde_rscc>;
+};
+
+&sde_dsi {
+	pinctrl-names = "panel_active", "panel_suspend", "pwm_pin";
+	pinctrl-0 = <&sde_dsi_active &sde_te_active>;
+	pinctrl-1 = <&sde_dsi_suspend &sde_te_suspend>;
+	pinctrl-2 = <&lcd_backlight_pwm_default>;
+
+	qcom,dsi-default-panel = <&dsi_m19_36_02_0a_fhd_dsc_vid>;
+	qcom,platform-te-gpio = <&tlmm 93 0>;
+	qcom,panel-te-source = <0>;
+	qcom,demura-panel-id = <0x122e700 0xb0>;
+};
+
+&qupv3_se1_i2c {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "ok";
+
+	ktd3136@36 {
+		compatible = "ktd,ktd3136";
+		reg = <0x36>;
+		ktd,hwen-gpio = <&pm6450_gpios 6 1>;
+		status = "okay";
+	};
+
+	ocp2131@3e {
+		compatible = "qcom,ocp2131_bias";
+		reg = <0x3e>;
+		lcm-enp-gpio = <&pm7250b_gpios 2 1>;
+		lcm-enn-gpio = <&pm7250b_gpios 4 1>;
+		status = "okay";
+	};
+};
+
