@@ -105,3 +105,8 @@
 	regulator-boot-on;
 	regulator-always-on;
 };
+
+/* PM8010 PMICs and FSA4480 aren't populated on sky */
+&qupv3_se8_i2c {
+	status = "disabled";
+};
