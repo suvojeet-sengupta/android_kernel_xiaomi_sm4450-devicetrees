@@ -10,3 +10,10 @@
 	/* Stock trustzone doesn't broadcast the HWKM TP key */
 	qcom,ice-hwkm-set-tpkey;
 };
+
+&soc {
+	/* Stock modem asks for 3 MB of rmtfs shared memory */
+	qcom,rmtfs_sharedmem@0 {
+		reg = <0x0 0x300000>;
+	};
+};
