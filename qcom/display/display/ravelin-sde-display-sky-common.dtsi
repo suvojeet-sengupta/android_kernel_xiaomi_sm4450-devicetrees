@@ -4,6 +4,18 @@
 #include "dsi_panel_m19_42_03_0b_fhd_dsc_vid.dtsi"
 #include "dsi_panel_m19_42_03_0c_fhd_dsc_vid.dtsi"
 
+/*
+ * Don't take over the bootloader display: DFPS breaks the panel until it is
+ * fully initialized by the kernel. Keep the splash memory reserved.
+ */
+/delete-node/ &splash_memory;
+
+&reserved_memory {
+	sky_splash_memory: sky_splash_region {
+		reg = <0x0 0xb8000000 0x0 0x02b00000>;
+	};
+};
+
 &soc {
 	thermal_screen: thermal-screen {
 		panel = <&dsi_m19_36_02_0a_fhd_dsc_vid
