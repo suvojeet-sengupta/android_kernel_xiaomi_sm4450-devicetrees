@@ -9,3 +9,30 @@
 &tlmm {
 	qcom,gpios-reserved = <0 1 2 3 18 19 20 21>;
 };
+
+/* Camera sensors use L15B and run L6E down to 2.8V (mist-w-oss) */
+&apps_rsc_drv2 {
+	rpmh-regulator-ldob15 {
+		compatible = "qcom,rpmh-vrm-regulator";
+		qcom,resource-name = "ldob15";
+		qcom,regulator-type = "pmic5-ldo";
+		qcom,supported-modes =
+			<RPMH_REGULATOR_MODE_LPM
+			RPMH_REGULATOR_MODE_HPM>;
+		qcom,mode-threshold-currents = <0 30000>;
+		qcom,disable-mode = <RPMH_REGULATOR_MODE_LPM>;
+		L15B:
+		pm6450_l15: regulator-pm6450-l15 {
+			regulator-name = "pm6450_l15";
+			qcom,set = <RPMH_REGULATOR_SET_ALL>;
+			regulator-min-microvolt = <1000000>;
+			regulator-max-microvolt = <1304000>;
+			qcom,init-voltage = <1150000>;
+			qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
+		};
+	};
+};
+
+&L6E {
+	regulator-min-microvolt = <2800000>;
+};
