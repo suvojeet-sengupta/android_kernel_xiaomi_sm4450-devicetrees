@@ -54,6 +54,7 @@ ifneq ($(CONFIG_ARCH_QTI_VM), y)
 ifeq ($(CONFIG_XIAOMI_DEVICE_DTBS),y)
 dtbo-$(CONFIG_ARCH_RAVELIN) += display/ravelin-sde.dtbo
 dtbo-$(CONFIG_SKY_DTB) += display/ravelin-sde-display-sky-overlay.dtbo
+dtbo-$(CONFIG_BREEZE_DTB) += display/ravelin-sde-display-breeze-overlay.dtbo
 else
 dtbo-$(CONFIG_ARCH_RAVELIN) += display/ravelin-sde.dtbo \
                 display/ravelin-sde-display-atp-overlay.dtbo \

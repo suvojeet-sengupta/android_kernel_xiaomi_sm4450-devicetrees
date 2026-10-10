@@ -1,0 +1,59 @@
+#include "touchscreen_n19.dtsi"
+#include "ravelin-sde-display.dtsi"
+#include "dsi_panel_n19_36_02_0a_fhd_dsc_vid.dtsi"
+#include "dsi_panel_n19_36_02_0c_fhd_dsc_vid.dtsi"
+#include "dsi_panel_n19_36_02_0e_fhd_dsc_vid.dtsi"
+#include "dsi_panel_n19_42_03_0b_fhd_dsc_vid.dtsi"
+#include "dsi_panel_n19_42_03_0d_fhd_dsc_vid.dtsi"
+
+/*
+ * Don't take over the bootloader display: DFPS breaks the panel until it is
+ * fully initialized by the kernel. Keep the splash memory reserved.
+ */
+/delete-node/ &splash_memory;
+
+&reserved_memory {
+	breeze_splash_memory: breeze_splash_region {
+		reg = <0x0 0xb8000000 0x0 0x02b00000>;
+	};
+};
+
+&soc {
+	thermal_screen: thermal-screen {
+		panel = <&dsi_n19_36_02_0a_fhd_dsc_vid
+			 &dsi_n19_36_02_0c_fhd_dsc_vid
+			 &dsi_n19_36_02_0e_fhd_dsc_vid
+			 &dsi_n19_42_03_0b_fhd_dsc_vid
+			 &dsi_n19_42_03_0d_fhd_dsc_vid>;
+	};
+};
+
+&mdss_mdp {
+	connectors = <&sde_dsi &smmu_sde_unsec &smmu_sde_sec &sde_rscc>;
+};
+
+&sde_dsi {
+	pinctrl-names = "panel_active", "panel_suspend", "pwm_pin";
+	pinctrl-0 = <&sde_dsi_active &sde_te_active>;
+	pinctrl-1 = <&sde_dsi_suspend &sde_te_suspend>;
+	pinctrl-2 = <&lcd_backlight_pwm_default>;
+
+	qcom,dsi-default-panel = <&dsi_n19_36_02_0a_fhd_dsc_vid>;
+	qcom,platform-te-gpio = <&tlmm 93 0>;
+	qcom,panel-te-source = <0>;
+	qcom,demura-panel-id = <0x122e700 0xb0>;
+};
+
+&qupv3_se9_i2c {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "ok";
+
+	ocp2131@3e {
+		compatible = "qcom,ocp2131_bias";
+		reg = <0x3e>;
+		lcm-enp-gpio = <&tlmm 59 0>;
+		lcm-enn-gpio = <&tlmm 62 0>;
+		status = "okay";
+	};
+};
