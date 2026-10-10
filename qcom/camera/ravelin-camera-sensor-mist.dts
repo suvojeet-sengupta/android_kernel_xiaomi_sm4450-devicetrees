@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/clock/qcom,sm4450-gcc.h>
+#include <dt-bindings/clock/qcom,sm4450-camcc.h>
+#include <dt-bindings/interconnect/qcom,ravelin.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
+
+#include "ravelin-camera-sensor-mist-common.dtsi"
+
+/ {
+	model = "Xiaomi Mist QRD";
+	compatible = "qcom,ravelin-qrd", "qcom,ravelin", "qcom,qrd";
+	qcom,msm-id = <568 0x10000>, <602 0x10000>, <653 0x10000>, <654 0x10000>;
+	qcom,board-id = <0x1000B 0>;
+};
