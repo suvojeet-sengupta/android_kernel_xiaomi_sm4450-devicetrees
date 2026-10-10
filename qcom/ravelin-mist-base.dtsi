@@ -1,0 +1,81 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Xiaomi Mist base, memory layout from the stock mist 6.6 DT
+ * (OS3.0.306.0 firmware).
+ */
+
+#include "ravelin-xiaomi-common-base.dtsi"
+
+/delete-node/ &dsm_mem;
+/delete-node/ &dsm_cma_mem;
+/delete-node/ &xbl_ramdump_mem;
+/delete-node/ &ipa_fw_mem;
+/delete-node/ &ipa_gsi_mem;
+/delete-node/ &gpu_microcode_mem;
+
+&reserved_memory {
+	xbl_ramdump_mem: xbl_ramdump_region@a6b80000 {
+		no-map;
+		reg = <0x0 0xa6b80000 0x0 0x280000>;
+	};
+
+	ipa_fw_mem: ipa_fw_region@89800000 {
+		no-map;
+		reg = <0x0 0x89800000 0x0 0x10000>;
+	};
+
+	ipa_gsi_mem: ipa_gsi_region@89810000 {
+		no-map;
+		reg = <0x0 0x89810000 0x0 0xa000>;
+	};
+
+	gpu_microcode_mem: gpu_microcode_region@8981a000 {
+		no-map;
+		reg = <0x0 0x8981a000 0x0 0x2000>;
+	};
+};
+
+&wlan_msa_mem {
+	reg = <0x0 0x82a00000 0x0 0x300000>;
+};
+
+&adsp_mem {
+	reg = <0x0 0x87300000 0x0 0x2500000>;
+};
+
+&trusted_apps_mem {
+	reg = <0x0 0xe9480000 0x0 0x4c00000>;
+};
+
+&qseecom_ta_mem {
+	size = <0x0 0x1800000>;
+};
+
+&modem_pas {
+	memory-region = <&mpss_mem &system_cma>;
+};
+
+&soc {
+	qcom,memshare {
+		/delete-node/ qcom,client_md_op1;
+	};
+
+	/* Stock modem asks for 3 MB of rmtfs shared memory */
+	qcom,rmtfs_sharedmem@0 {
+		reg = <0x0 0x300000>;
+	};
+};
+
+/* The USB-C audio switch sits on SE1 with the amps */
+/delete-node/ &fsa4480;
+
+&qupv3_se1_i2c {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "ok";
+
+	fsa4480: fsa4480@42 {
+		compatible = "qcom,fsa4480-i2c";
+		reg = <0x42>;
+	};
+};
