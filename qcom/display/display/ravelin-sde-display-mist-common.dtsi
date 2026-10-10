@@ -1,0 +1,38 @@
+#include "ravelin-sde-display.dtsi"
+#include "dsi_panel_p19_38_0e_0a_video_dphy.dtsi"
+#include "dsi_panel_p19_38_0e_0a_p11_video_dphy.dtsi"
+#include "dsi_panel_p19_38_0e_0a_p20_video_dphy.dtsi"
+#include "dsi_panel_p19_38_0e_0a_new_p10_video_dphy.dtsi"
+#include "dsi_panel_p19_38_0e_0a_new_p11_video_dphy.dtsi"
+#include "dsi_panel_p19_38_0e_0a_new_p20_video_dphy.dtsi"
+#include "dsi_panel_p19_38_0e_0a_mp_video_dphy.dtsi"
+#include "dsi_panel_p19_41_02_0b_video_dphy.dtsi"
+#include "touchscreen_p19.dtsi"
+
+&soc {
+	thermal_screen: thermal-screen {
+		panel = <&dsi_p19_38_0e_0a_video_dphy
+			 &dsi_p19_38_0e_0a_p11_video_dphy
+			 &dsi_p19_38_0e_0a_p20_video_dphy
+			 &dsi_p19_38_0e_0a_new_p10_video_dphy
+			 &dsi_p19_38_0e_0a_new_p11_video_dphy
+			 &dsi_p19_38_0e_0a_new_p20_video_dphy
+			 &dsi_p19_38_0e_0a_mp_video_dphy
+			 &dsi_p19_41_02_0b_video_dphy>;
+	};
+};
+
+&mdss_mdp {
+	connectors = <&sde_dsi &smmu_sde_unsec &smmu_sde_sec &sde_rscc>;
+};
+
+&sde_dsi {
+	pinctrl-names = "panel_active", "panel_suspend";
+	pinctrl-0 = <&sde_dsi_active &sde_te_active>;
+	pinctrl-1 = <&sde_dsi_suspend &sde_te_suspend>;
+
+	qcom,dsi-default-panel = <&dsi_p19_38_0e_0a_video_dphy>;
+	qcom,platform-te-gpio = <&tlmm 93 0>;
+	qcom,panel-te-source = <0>;
+	qcom,demura-panel-id = <0x122e700 0xb0>;
+};
