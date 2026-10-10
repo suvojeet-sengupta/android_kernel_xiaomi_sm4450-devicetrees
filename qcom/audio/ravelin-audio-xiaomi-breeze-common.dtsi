@@ -1,0 +1,86 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Xiaomi Breeze audio, based on ravelin-audio-qrd.dtsi.
+ */
+
+#include "ravelin-audio-qrd.dtsi"
+
+&lpass_cdc {
+	qcom,num-macros = <3>;
+};
+
+&wsa_macro {
+	status = "disabled";
+};
+
+&wsa2_macro {
+	status = "disabled";
+};
+
+&wcd937x_codec {
+	qcom,cdc-micbias2-mv = <2700>;
+};
+
+&waipio_snd {
+	qcom,wsa-max-devs = <0>;
+	qcom,audio-routing =
+		"AMIC1", "Analog Mic1",
+		"AMIC1", "MIC BIAS1",
+		"AMIC2", "Analog Mic2",
+		"AMIC2", "MIC BIAS2",
+		"AMIC3", "Analog Mic3",
+		"AMIC3", "MIC BIAS3",
+		"TX DMIC0", "Digital Mic0",
+		"TX DMIC0", "MIC BIAS3",
+		"TX DMIC1", "Digital Mic1",
+		"TX DMIC1", "MIC BIAS3",
+		"TX DMIC2", "Digital Mic2",
+		"TX DMIC2", "MIC BIAS1",
+		"TX DMIC3", "Digital Mic3",
+		"TX DMIC3", "MIC BIAS1",
+		"IN1_HPHL", "HPHL_OUT",
+		"IN2_HPHR", "HPHR_OUT",
+		"IN3_AUX", "AUX_OUT",
+		"RX_TX DEC0_INP", "TX DEC0 MUX",
+		"RX_TX DEC1_INP", "TX DEC1 MUX",
+		"RX_TX DEC2_INP", "TX DEC2 MUX",
+		"RX_TX DEC3_INP", "TX DEC3 MUX",
+		"TX SWR_INPUT", "WCD_TX_OUTPUT",
+		"VA SWR_INPUT", "VA_SWR_CLK",
+		"VA SWR_INPUT", "WCD_TX_OUTPUT",
+		"VA_AIF1 CAP", "VA_SWR_CLK",
+		"VA_AIF2 CAP", "VA_SWR_CLK",
+		"VA_AIF3 CAP", "VA_SWR_CLK";
+	si,sia81xx-max-num = <1>;
+	si,sia81xx-aux-devs = <&si_pa_L>;
+	si,sia81xx-aux-devs-prefix = "SpkrMonoL";
+};
+
+&soc {
+	si_pa_L: si_pa_L {
+		compatible = "si,sia81xx";
+		si,si_pa_type = "sia8152x";
+		si,si_pa_disable_pin = <1>;
+		channel_num = <0>;
+	};
+};
+
+/* The speaker amp is either an FS1599 or an SIA8152 */
+&qupv3_se9_i2c {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fs15xx_pa@34 {
+		compatible = "foursemi,fs15xx";
+		reg = <0x34>;
+		status = "okay";
+	};
+
+	sipa_i2c_L@28 {
+		compatible = "si,sia81xx-i2c";
+		reg = <0x28>;
+		si,sipa-dev = <&si_pa_L>;
+		status = "okay";
+	};
+};
