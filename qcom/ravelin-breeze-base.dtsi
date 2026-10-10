@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Xiaomi Breeze base.
+ */
+
+#include "ravelin-xiaomi-common-base.dtsi"
+#include "ravelin-xiaomi-legacy-memory.dtsi"
+
+/* Breeze firmware (A15 OS2.0.204.0, A16 OS3.0.303.0) uses a larger modem region */
+&mpss_mem {
+	reg = <0x0 0x8a000000 0x0 0xda00000>;
+};
+
+&ufshc_mem {
+	/* Stock trustzone doesn't broadcast the HWKM TP key */
+	qcom,ice-hwkm-set-tpkey;
+};

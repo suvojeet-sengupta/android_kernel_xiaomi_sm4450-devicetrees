@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+&soc {
+	/*
+	 * Sensor supply, shared by the Goodix and Silead drivers. Keep it on so
+	 * neither driver powers the other's sensor down while it probes.
+	 */
+	fp_vdd: fp_vdd {
+		compatible = "regulator-fixed";
+		regulator-name = "fp_vdd";
+		gpio = <&tlmm 32 0>;
+		enable-active-high;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	xiaomi_fingerprint {
+		compatible = "xiaomi-fingerprint";
+		fingerprint,name = "xiaomi-fingerprint";
+		status = "ok";
+	};
+
+	goodix_fp {
+		compatible = "goodix,fingerprint";
+		interrupt-parent = <&tlmm>;
+		interrupts = <105 1>;
+		fp-gpio-irq = <&tlmm 105 0>;
+		fp-gpio-reset = <&tlmm 102 0>;
+		fp_vdd_vreg-supply = <&fp_vdd>;
+		status = "okay";
+	};
+
+	silead_fp {
+		compatible = "sil,silead_fp";
+		interrupt-parent = <&tlmm>;
+		interrupts = <105 1>;
+		irq-gpios = <&tlmm 105 0>;
+		rst-gpios = <&tlmm 102 0>;
+		status = "okay";
+	};
+};

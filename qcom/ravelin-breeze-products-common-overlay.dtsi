@@ -1,0 +1,34 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Xiaomi Breeze board.
+ */
+
+#include "ravelin-xiaomi-common-overlay-base.dtsi"
+#include "ravelin-xiaomi-common-overlay.dtsi"
+#include "ravelin-breeze-charger-overlay.dtsi"
+#include "ravelin-breeze-fingerprint-overlay.dtsi"
+
+&qupv3_se6_spi {
+	status = "ok";
+
+	spi_ir@1 {
+		compatible = "ir-spi-led";
+		reg = <1>;
+		spi-max-frequency = <50000000>;
+		spi-cpol;
+		status = "ok";
+	};
+};
+
+&ufshc_mem {
+	qcom,ufs-dev-revert;
+};
+
+&usb2_phy0 {
+	qcom,param-override-seq = <0x86 0x6c>;
+};
+
+/* PM8010 PMICs and FSA4480 aren't populated on breeze */
+&qupv3_se8_i2c {
+	status = "disabled";
+};

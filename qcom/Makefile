@@ -258,6 +258,12 @@ RAVELIN_4GB_BASE_DTB += ravelin-sky-4gb-base.dtb
 RAVELIN_BOARDS += ravelin-sky-overlay.dtbo
 RAVELIN_4GB_BOARDS += ravelin-sky-4gb-overlay.dtbo
 endif
+ifeq ($(CONFIG_BREEZE_DTB),y)
+RAVELIN_BASE_DTB += ravelin-breeze-base.dtb
+RAVELIN_4GB_BASE_DTB += ravelin-breeze-4gb-base.dtb
+RAVELIN_BOARDS += ravelin-breeze-overlay.dtbo
+RAVELIN_4GB_BOARDS += ravelin-breeze-4gb-overlay.dtbo
+endif
 else
 RAVELIN_BASE_DTB += ravelin.dtb ravelinp.dtb ravelin-sg.dtb ravelinp-sg.dtb montague.dtb montaguep.dtb montague-qmb.dtb montague-cqm-fp1.dtb montague-cqm-fp2.dtb montague-cqm-fp3.dtb montague-cqs-fp1.dtb montague-cqs-fp2.dtb montague-cqs-fp3.dtb
 RAVELIN_4GB_BASE_DTB += ravelin-4gb.dtb ravelinp-4gb.dtb ravelin-sg.dtb ravelinp-sg.dtb montague-4gb.dtb montaguep-4gb.dtb

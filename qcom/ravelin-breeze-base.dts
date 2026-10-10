@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+/dts-v1/;
+
+#include "ravelin-breeze-base.dtsi"
+
+/ {
+	model = "Xiaomi Breeze";
+	compatible = "qcom,ravelin";
+	qcom,msm-id = <568 0x10000>, <602 0x10000>;
+	qcom,board-id = <0 0>;
+};
