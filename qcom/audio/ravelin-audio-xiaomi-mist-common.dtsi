@@ -1,0 +1,88 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Xiaomi Mist audio, based on ravelin-audio-qrd.dtsi.
+ */
+
+#include "ravelin-audio-qrd.dtsi"
+
+&lpass_cdc {
+	qcom,num-macros = <3>;
+};
+
+&wsa_macro {
+	status = "disabled";
+};
+
+&wsa2_macro {
+	status = "disabled";
+};
+
+&wcd937x_codec {
+	qcom,cdc-micbias1-mv = <2700>;
+	qcom,cdc-micbias2-mv = <2700>;
+	qcom,cdc-micbias3-mv = <2700>;
+};
+
+&waipio_snd {
+	qcom,wsa-max-devs = <0>;
+	qcom,audio-routing =
+		"AMIC1", "Analog Mic1",
+		"AMIC1", "MIC BIAS1",
+		"AMIC2", "Analog Mic2",
+		"AMIC2", "MIC BIAS2",
+		"AMIC3", "Analog Mic3",
+		"AMIC3", "MIC BIAS3",
+		"TX DMIC0", "Digital Mic0",
+		"TX DMIC0", "MIC BIAS3",
+		"TX DMIC1", "Digital Mic1",
+		"TX DMIC1", "MIC BIAS3",
+		"TX DMIC2", "Digital Mic2",
+		"TX DMIC2", "MIC BIAS1",
+		"TX DMIC3", "Digital Mic3",
+		"TX DMIC3", "MIC BIAS1",
+		"IN1_HPHL", "HPHL_OUT",
+		"IN2_HPHR", "HPHR_OUT",
+		"IN3_AUX", "AUX_OUT",
+		"RX_TX DEC0_INP", "TX DEC0 MUX",
+		"RX_TX DEC1_INP", "TX DEC1 MUX",
+		"RX_TX DEC2_INP", "TX DEC2 MUX",
+		"RX_TX DEC3_INP", "TX DEC3 MUX",
+		"TX SWR_INPUT", "WCD_TX_OUTPUT",
+		"VA SWR_INPUT", "VA_SWR_CLK",
+		"VA SWR_INPUT", "WCD_TX_OUTPUT",
+		"VA_AIF1 CAP", "VA_SWR_CLK",
+		"VA_AIF2 CAP", "VA_SWR_CLK",
+		"VA_AIF3 CAP", "VA_SWR_CLK";
+};
+
+&soc {
+	frsm_amp {
+		compatible = "foursemi,frsm-amp";
+		frsm,amp-ndev = <1>;
+		frsm,class-enable;
+		status = "okay";
+	};
+};
+
+/* Speaker amp is either an FS1815 or an OCA72xxx */
+&qupv3_se1_i2c {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	fs18xx@34 {
+		compatible = "foursemi,fs1815";
+		reg = <0x34>;
+		fwm-name = "frsm-spk.bin";
+		spkr-id = <1>;
+		status = "okay";
+	};
+
+	oca72xxx_pa@58 {
+		compatible = "ocs,oca72xxx_pa";
+		reg = <0x58>;
+		dev_index = <0>;
+		reset-gpio = <&tlmm 106 0>;
+		status = "okay";
+	};
+};
