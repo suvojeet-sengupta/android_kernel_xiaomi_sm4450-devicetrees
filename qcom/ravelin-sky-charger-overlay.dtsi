@@ -5,6 +5,8 @@
 	qcom,thermal-mitigation-step = <500000>;
 	qcom,wireless-charging-not-supported;
 	qcom,shutdown-voltage = <3300>;
+	/* XM_PROP_INPUT_SUSPEND in the sky ADSP charger firmware */
+	xiaomi,input-suspend-prop = <3>;
 	qcom,thermal-mitigation = <3500000 3400000 3300000 3200000 3100000
 				3000000 2900000 2800000 2700000 2600000 2500000
 				2400000 2300000 2200000 2100000 2000000 1900000
