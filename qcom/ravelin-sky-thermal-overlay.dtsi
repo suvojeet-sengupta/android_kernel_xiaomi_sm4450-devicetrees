@@ -1,0 +1,102 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Xiaomi Sky thermal sensors, named like stock for mi_thermald.
+ *
+ * mi_thermald builds its VIRTUAL-SENSOR from quiet_therm, charger_therm,
+ * msm_therm, pa2_therm and pa1_therm. sys-therm-1 stays for the QTI thermal
+ * HAL (skin), so quiet_therm reads the same input on its own ADC_TM channel.
+ * The CLO zones on the other channels are disabled: a sensor channel only
+ * binds the first available zone that references it.
+ */
+
+#include <dt-bindings/iio/qcom,spmi-adc7-pm6450.h>
+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+
+&soc {
+	thermal-message {
+		board-sensor = "VIRTUAL-SENSOR";
+	};
+};
+
+&pm6450_gpios {
+	msm_therm {
+		msm_therm_default: msm_therm_default {
+			pins = "gpio3";
+			bias-high-impedance;
+		};
+	};
+};
+
+&pmk8350_vadc {
+	pinctrl-0 = <&quiet_therm_default &wide_rfc_therm_default
+			&rear_cam_flash_therm_default &pa_therm2_default
+			&pa_therm1_default &msm_therm_default>;
+
+	pm6450_msm_therm {
+		reg = <PM6450_ADC7_AMUX2_GPIO3_100K_PU>;
+		label = "pm6450_msm_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+};
+
+&pmk8350_adc_tm {
+	pm6450_quiet_therm_xm {
+		reg = <6>;
+		io-channels = <&pmk8350_vadc PM6450_ADC7_AMUX1_GPIO2_100K_PU>;
+		qcom,ratiometric;
+		qcom,hw-settle-time-us = <200>;
+	};
+
+	pm6450_msm_therm {
+		reg = <7>;
+		io-channels = <&pmk8350_vadc PM6450_ADC7_AMUX2_GPIO3_100K_PU>;
+		qcom,ratiometric;
+		qcom,hw-settle-time-us = <200>;
+	};
+};
+
+#define XM_THERM_ZONE(_name, _tm, _chan)			\
+	_name {							\
+		polling-delay-passive = <0>;			\
+		polling-delay = <0>;				\
+		thermal-sensors = <&_tm _chan>;			\
+		trips {						\
+			active-config0 {			\
+				temperature = <125000>;		\
+				hysteresis = <1000>;		\
+				type = "passive";		\
+			};					\
+		};						\
+	}
+
+&thermal_zones {
+	sys-therm-4 {
+		status = "disabled";
+	};
+
+	sys-therm-11 {
+		status = "disabled";
+	};
+
+	sys-therm-5 {
+		status = "disabled";
+	};
+
+	sys-therm-7 {
+		status = "disabled";
+	};
+
+	sys-therm-9 {
+		status = "disabled";
+	};
+
+	XM_THERM_ZONE(quiet_therm, pmk8350_adc_tm, 6);
+	XM_THERM_ZONE(msm_therm, pmk8350_adc_tm, 7);
+	XM_THERM_ZONE(backlight_therm, pmk8350_adc_tm, 2);
+	XM_THERM_ZONE(pa2_therm, pmk8350_adc_tm, 4);
+	XM_THERM_ZONE(pa1_therm, pmk8350_adc_tm, 5);
+	XM_THERM_ZONE(usb_conn_therm, pm7250b_adc_tm, 0);
+	XM_THERM_ZONE(charger_therm, pm7250b_adc_tm, 1);
+};
