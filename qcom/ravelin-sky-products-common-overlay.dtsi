@@ -111,3 +111,9 @@
 &qupv3_se8_i2c {
 	status = "disabled";
 };
+
+&pm7250b_vib {
+	qcom,vib-ldo-volt-uv = <3300000>;
+	qcom,vib-overdrive-volt-uv = <3544000>;
+	/delete-property/ qcom,disable-overdrive;
+};
