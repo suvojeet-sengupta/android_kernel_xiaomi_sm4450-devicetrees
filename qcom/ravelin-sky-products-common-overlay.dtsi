@@ -113,7 +113,9 @@
 };
 
 &pm7250b_vib {
-	qcom,vib-ldo-volt-uv = <3300000>;
+	qcom,vib-ldo-volt-uv = <3400000>;
 	qcom,vib-overdrive-volt-uv = <3544000>;
+	/* Taps and clicks last up to 50 ms: play all of them at the LDO maximum */
+	qcom,vib-overdrive-ms = <60>;
 	/delete-property/ qcom,disable-overdrive;
 };
