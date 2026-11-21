@@ -9,9 +9,11 @@
 
 	/*
 	 * No fixed thermal charge current levels: charge at the full current
-	 * the ADSP allows, and let smart charging ease the current off only as
-	 * the battery heads for 40 C or the skin (quiet_therm) for 41 C, 1 A
-	 * at a time, giving it back 250 mA at a time as they cool down.
+	 * the ADSP allows and let smart charging seek the fastest current that
+	 * holds the battery at 40 C and the skin (quiet_therm) at 41 C. It
+	 * reacts to heat by up to 1 A a tick and eases back on by up to 2 A a
+	 * tick, moving 30 mA per 0.1 C of projected headroom, and never charges
+	 * below 900 mA.
 	 */
 	/delete-property/ qcom,thermal-mitigation;
 	/delete-property/ qcom,thermal-mitigation-step;
@@ -19,7 +21,8 @@
 	xiaomi,smart-chg-temp = <400>;
 	xiaomi,smart-chg-skin-zone = "quiet_therm";
 	xiaomi,smart-chg-skin-temp = <410>;
-	xiaomi,smart-chg-min-fcc-ua = <500000>;
-	xiaomi,smart-chg-step-ua = <250000>;
+	xiaomi,smart-chg-min-fcc-ua = <900000>;
 	xiaomi,smart-chg-down-ua = <1000000>;
+	xiaomi,smart-chg-up-ua = <2000000>;
+	xiaomi,smart-chg-gain-ua = <30000>;
 };
