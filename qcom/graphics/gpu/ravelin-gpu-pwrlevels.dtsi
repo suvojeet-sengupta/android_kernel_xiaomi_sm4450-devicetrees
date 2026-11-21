@@ -10,7 +10,7 @@
 			#size-cells = <0>;
 
 			qcom,speed-bin = <0>;
-			qcom,initial-pwrlevel = <6>;
+			qcom,initial-pwrlevel = <5>;
 			qcom,ca-target-pwrlevel = <5>;
 
 			qcom,gpu-pwrlevel@0 {
@@ -117,7 +117,7 @@
 			#size-cells = <0>;
 
 			qcom,speed-bin = <213>;
-			qcom,initial-pwrlevel = <6>;
+			qcom,initial-pwrlevel = <5>;
 			qcom,ca-target-pwrlevel = <5>;
 
 			qcom,gpu-pwrlevel@0 {
@@ -224,7 +224,7 @@
 			#size-cells = <0>;
 
 			qcom,speed-bin = <201>;
-			qcom,initial-pwrlevel = <5>;
+			qcom,initial-pwrlevel = <4>;
 			qcom,ca-target-pwrlevel = <4>;
 
 			qcom,gpu-pwrlevel@0 {
@@ -317,7 +317,7 @@
 			#size-cells = <0>;
 
 			qcom,speed-bin = <162>;
-			qcom,initial-pwrlevel = <3>;
+			qcom,initial-pwrlevel = <2>;
 			qcom,ca-target-pwrlevel = <2>;
 
 			qcom,gpu-pwrlevel@0 {
