@@ -8,18 +8,19 @@
 	xiaomi,input-suspend-prop = <3>;
 
 	/*
-	 * No fixed thermal charge current levels and smart charging off:
-	 * charge at the full current the ADSP allows, with only its own JEITA
-	 * limits underneath.
+	 * No fixed thermal charge current levels, and smart charging on by
+	 * default: charge at the fastest current that holds the battery at
+	 * 40 C and the skin (quiet_therm) at 41 C. It reacts to heat by up to
+	 * 1 A a tick and eases back on by up to 2 A a tick, moving 30 mA per
+	 * 0.1 C of projected headroom, and never charges below 900 mA.
 	 *
-	 * Smart charging can be turned on at /sys/class/qcom-battery/smart_chg.
-	 * It then seeks the fastest current that holds the battery at 40 C and
-	 * the skin (quiet_therm) at 41 C. It reacts to heat by up to 1 A a tick
-	 * and eases back on by up to 2 A a tick, moving 30 mA per 0.1 C of
-	 * projected headroom, and never charges below 900 mA.
+	 * /sys/class/qcom-battery/smart_chg turns it off, and force_fast_chg
+	 * charges at the full current the ADSP allows instead, with only its
+	 * own JEITA limits underneath.
 	 */
 	/delete-property/ qcom,thermal-mitigation;
 	/delete-property/ qcom,thermal-mitigation-step;
+	xiaomi,smart-chg-enable;
 	xiaomi,smart-chg-temp = <400>;
 	xiaomi,smart-chg-skin-zone = "quiet_therm";
 	xiaomi,smart-chg-skin-temp = <410>;
